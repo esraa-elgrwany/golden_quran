@@ -37,15 +37,16 @@ class _NightState extends State<Night> {
   @override
   void initState() {
     super.initState();
-    loadNightSettings();
+   loadNightSettings();
   }
 
    Future<void> loadNightSettings() async {
-     isSwitched = await HiveService.getSwitchState('nightSwitch');
-     selectedTimeNight = await HiveService.getTime('nightSelectedTime') ?? DateTime.now();
-     endItemsValue = await HiveService.getEndTime('nightEndItemsValue') ?? 'ساعة';
-     separateItemsValue = await HiveService.getSeparateTime('nightSeparateItemsValue') ?? 'دقيقة';
-     setState(() {});
+       isSwitched = await HiveService.getSwitchState('nightSwitch');
+       selectedTimeNight = await HiveService.getTime('nightSelectedTime') ?? DateTime.now();
+       endItemsValue = await HiveService.getEndTime('nightEndItemsValue') ?? 'ساعة';
+       separateItemsValue = await HiveService.getSeparateTime('nightSeparateItemsValue') ?? 'دقيقة';
+     setState(() {
+     });
    }
   @override
   Widget build(BuildContext context) {
@@ -97,14 +98,14 @@ class _NightState extends State<Night> {
                                    isSwitched=
                                         value;
                                     if (isSwitched) {
-                                      NotificationService.scheduleNotification(
+                                      NotificationService.nightScheduleNotification(
                                           messages, selectedTimeNight,
                                           NotificationService.intervalBetweenNightNotifications,
                                           NotificationService.endTimeNight);
                                       print("***************${
                                           NotificationService.scheduleNotification}");
                                     }else{
-                                      NotificationService.flutterLocalNotificationsPlugin.cancelAll();
+                                       NotificationService.cancelNotificationsForChannel('channel_IdNight');
                                     }
                                   });
                                   await HiveService.saveSwitchState('nightSwitch', value);
@@ -183,6 +184,7 @@ class _NightState extends State<Night> {
                                 );
                               }).toList(),
                               onChanged: (String? newValue) async{
+                                await HiveService.saveEndTime('nightEndItemsValue',newValue!);
                                 setState(() {
                                   endItemsValue = newValue;
                                   if(newValue==endItems[0]){
@@ -195,7 +197,6 @@ class _NightState extends State<Night> {
                                         selectedTimeNight.add(Duration(hours:2));
                                   }
                                 });
-                                await HiveService.saveEndTime('nightEndItemsValue',endItemsValue!);
                               },
                               dropdownColor: Theme.of(context).colorScheme.surface,
 
@@ -203,7 +204,7 @@ class _NightState extends State<Night> {
                               icon: Center(
                                 child: Icon(Icons.arrow_drop_down,
                                     color:Theme.of(context).colorScheme.secondary),
-                              ), // Dropdown icon
+                              ),
                             ),
                             Text("الفاصل بين الاشعارات:",
                                 style: Theme.of(context)
@@ -223,6 +224,7 @@ class _NightState extends State<Night> {
                                   );
                                 }).toList(),
                                 onChanged: (String? newValue) async{
+                                  await HiveService.saveSeparateTime('nightSeparateItemsValue', newValue!);
                                   setState(() {
                                     separateItemsValue = newValue;
                                     if (newValue==separateItems[0]){
@@ -233,12 +235,9 @@ class _NightState extends State<Night> {
                                       =Duration(minutes: 2);
                                     }
                                   });
-                                  await HiveService.saveSeparateTime('nightSeparateItemsValue', separateItemsValue!);
                                 },
                                 dropdownColor:Theme.of(context).colorScheme.surface,
-                                // Background color of dropdown
                                 style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-                                // Text style of dropdown items
                                 icon: Center(
                                   child: Icon(Icons.arrow_drop_down,
                                       color:Theme.of(context).colorScheme.secondary),

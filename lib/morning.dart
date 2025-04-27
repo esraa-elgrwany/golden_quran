@@ -45,11 +45,13 @@ class _MorningState extends State<Morning> {
   }
 
   Future<void> loadMorningSettings() async {
-    isSwitched = await HiveService.getSwitchState('morningSwitch');
-    selectedTime = await HiveService.getTime('morningSelectedTime') ?? DateTime.now();
-    endItemsValue = await HiveService.getEndTime('morningEndItemsValue') ?? 'ساعة';
-    separateItemsValue = await HiveService.getSeparateTime('morningSeparateItemsValue') ?? 'دقيقة';
-    setState(() {});
+
+      isSwitched = await HiveService.getSwitchState('morningSwitch');
+      selectedTime = await HiveService.getTime('morningSelectedTime') ?? DateTime.now();
+      endItemsValue = await HiveService.getEndTime('morningEndItemsValue') ?? 'ساعة';
+      separateItemsValue = await HiveService.getSeparateTime('morningSeparateItemsValue') ?? 'دقيقة';
+   setState(() {
+   });
   }
 
   @override
@@ -111,13 +113,12 @@ class _MorningState extends State<Morning> {
                                       print(
                                           "***************${NotificationService.scheduleNotification}");
                                     } else {
-                                      NotificationService
-                                          .flutterLocalNotificationsPlugin
-                                          .cancelAll();
+                                       NotificationService.cancelNotificationsForChannel('channel_IdMorning');
                                     }
                                   });
-                                  await HiveService.saveSwitchState(
-                                      'morningSwitch', value);
+                                  await HiveService.saveSwitchState('morningSwitch', value);
+                                  print(
+                                      "***************${isSwitched}");
                                 }),
                           ],
                         ),
@@ -227,7 +228,7 @@ class _MorningState extends State<Morning> {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .secondary),
-                              ), // Dropdown icon
+                              ),
                             ),
                             Text("الفاصل بين الاشعارات:",
                                 style: Theme.of(context)
@@ -259,8 +260,7 @@ class _MorningState extends State<Morning> {
                                           Duration(minutes: 2);
                                     }
                                   });
-                                  await HiveService.saveSeparateTime('morningSeparateItemsValue',
-                                      separateItemsValue!);
+                                  await HiveService.saveSeparateTime('morningSeparateItemsValue',separateItemsValue!);
                                 },
                                 dropdownColor:
                                     Theme.of(context).colorScheme.surface,
@@ -269,7 +269,6 @@ class _MorningState extends State<Morning> {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onBackground),
-                                // Text style of dropdown items
                                 icon: Center(
                                   child: Icon(Icons.arrow_drop_down,
                                       color: Theme.of(context)

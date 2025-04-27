@@ -30,7 +30,8 @@ class _PrayTimesScreenState extends State<PrayTimesScreen> {
 
   Future<void> loadSwitchState() async {
     isSwitched = await HiveService.getSwitchState('praySwitch');
-    setState(() {});
+    setState(() {
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -81,8 +82,7 @@ class _PrayTimesScreenState extends State<PrayTimesScreen> {
                         if (isSwitched) {
                           schedulePrayerTimes(prayerTimes);
                         } else {
-                          NotificationService.flutterLocalNotificationsPlugin
-                              .cancelAll();
+                          NotificationService.cancelNotificationsForChannel('channel_IdPray');
                         }
                       });
                       await HiveService.saveSwitchState('praySwitch', value);
@@ -152,14 +152,6 @@ class _PrayTimesScreenState extends State<PrayTimesScreen> {
     );
   }
 
-  void playAzan() {
-    AssetsAudioPlayer.newPlayer().open(
-      Audio("assets/sounds/beautifull_azan.mp3"),
-      autoStart: true,
-      showNotification: true,
-    );
-  }
-
   void schedulePrayerTimes(PrayerTimes prayerTimes) {
     NotificationService.schedulePrayerNotification(
       0,
@@ -169,39 +161,36 @@ class _PrayTimesScreenState extends State<PrayTimesScreen> {
     );
     print("-----------------${prayerTimes.fajr}");
     NotificationService.schedulePrayerNotification(
-      0,
-      "Fajr Prayer",
-      "Time for Fajr prayer",
+      1,
+      "sunrise Prayer",
+      "Time for sunrise prayer",
       prayerTimes.sunrise,
     );
     print("-----------------${prayerTimes.sunrise}");
     NotificationService.schedulePrayerNotification(
-      1,
+      2,
       "Dhuhr Prayer",
       "Time for Dhuhr prayer",
       prayerTimes.dhuhr,
     );
     print("-----------------${prayerTimes.dhuhr}");
-    NotificationService.schedulePrayerNotification(2,
+    NotificationService.schedulePrayerNotification(3,
       "Asr Prayer",
       "Time for Asr prayer",
       prayerTimes.asr,
     );
 
-    NotificationService.schedulePrayerNotification(3,
+    NotificationService.schedulePrayerNotification(4,
       "Maghrib Prayer",
       "Time for Maghrib prayer",
       prayerTimes.maghrib,
     );
 
-    NotificationService.schedulePrayerNotification(4,
+    NotificationService.schedulePrayerNotification(5,
       "Isha Prayer",
       "Time for Isha prayer",
       prayerTimes.isha,
     );
   }
 
-  Future<void> onNotificationTap() async {
-    playAzan();
-  }
 }

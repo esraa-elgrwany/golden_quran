@@ -24,7 +24,7 @@ void main() async{
   await Hive.initFlutter();
   await Hive.openBox("counterBox");
   await Hive.openBox("tempCounterBox");
-  await Hive.openBox('settings');
+  await Hive.openBox('settingsBox');
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => MyProvider(),
@@ -35,7 +35,6 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     var pro = Provider.of<MyProvider>(context);
