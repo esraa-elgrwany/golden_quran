@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:islami_project/ahadethmodel.dart';
 import 'package:islami_project/providers/my_provider.dart';
@@ -34,12 +35,16 @@ class _HadethDetailsState extends State<HadethDetails> {
           body: Padding(
             padding: const EdgeInsets.all(12),
             child: Card(
+              color: provider.modeApp==ThemeMode.light?
+           Colors.white.withOpacity(.9)
+        : Colors.white.withOpacity(.2),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Theme.of(context).colorScheme.primary, width: 2),
+                side: BorderSide(color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(24),
                 child: ListView.separated(
                   separatorBuilder: (context, index) => Divider(
                     color: Theme.of(context).colorScheme.surface,

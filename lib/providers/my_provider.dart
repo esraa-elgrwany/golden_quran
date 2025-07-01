@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MyProvider extends ChangeNotifier{
-  String languageCode="en";
+  String languageCode="ar";
    ThemeMode modeApp=ThemeMode.light;
+  bool isArabic=true;
+  bool isDark=false;
 
   changeLanguage(String langCode){
     languageCode=langCode;

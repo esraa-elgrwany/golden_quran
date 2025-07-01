@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islami_project/tabs/qurantab.dart';
-import 'package:provider/provider.dart';
 
 class SuraDetailsProvider extends ChangeNotifier{
   List<String> verses = [];

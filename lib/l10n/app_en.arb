@@ -12,5 +12,7 @@
   "radio": "Radio",
   "setting": "Settings",
   "dark": "Dark",
-  "light":"Light"
+  "light":"Light",
+  "translate": "Translate",
+  "list": "List"
 }

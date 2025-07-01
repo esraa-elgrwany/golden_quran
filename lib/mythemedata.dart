@@ -33,7 +33,7 @@ class MyThemeData{
       textTheme: TextTheme(
         bodySmall: GoogleFonts.elMessiri(
           fontSize: 20.sp,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w600,
           color: blackColor,
         ),
         bodyMedium: GoogleFonts.elMessiri(
@@ -63,7 +63,7 @@ class MyThemeData{
           onSecondary: Colors.white,
           error: Colors.red,
           onError: Colors.white,
-          background: darkPrimary,
+          background:Colors.white ,
           onBackground: Colors.white,
           surface: yellow,
           onSurface: Colors.white),
@@ -79,7 +79,7 @@ class MyThemeData{
       textTheme: TextTheme(
         bodySmall: GoogleFonts.elMessiri(
           fontSize: 20.sp,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w600,
           color:Colors.white,
         ),
         bodyMedium: GoogleFonts.elMessiri(
